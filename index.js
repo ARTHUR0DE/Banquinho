@@ -1,7 +1,20 @@
-import AlunoView from "./modules/aluno/views/index.js"
+// import AlunoView from "./modules/aluno/views/index.js"
+import CriarTabela from "./src/config/criar_tabela.js"
 import PromptSync from "prompt-sync"
 
 const input = PromptSync()
+
+async function criarTabelas() {
+    try {
+        await CriarTabela.curso()
+    await CriarTabela.aluno()
+    await CriarTabela.professor()
+    } catch (error) {
+        console.error('Erro ao criar tabelas:', error.message)
+    }
+    
+}
+criarTabelas()
 
 // const nome = input("Digite o nome do aluno: ")
 // const email = input("Digite o email do aluno: ")
@@ -13,4 +26,4 @@ const input = PromptSync()
 // AlunoView.listarTodos()
 // AlunoView.listarPorEmail(email)
 // AlunoView.editarAluno(nome, email, matricula, telefone, cod_turma)
-AlunoView.totalAlunos()
+// AlunoView.totalAlunos()
