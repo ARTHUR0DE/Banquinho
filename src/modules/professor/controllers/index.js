@@ -7,7 +7,7 @@ class ProfessorController{
                 return console.error('Todos os campos devem ser preenchidos.');
             }
             const professor = await ProfessorModel.criar(nome, matricula, cod_turma);
-            console.log('Professor criado com sucesso!');
+            console.log('Professor(a) criado com sucesso!');
             return professor;
             
         } catch (error) {
@@ -60,7 +60,7 @@ class ProfessorController{
 
     static async listarTodos(){
         try {
-            const professores = await ProfessorModel.listarTodos();
+            const professores = await ProfessorModel.ListarTodos();
             if(professores.length === 0){
                 return console.log('Nenhum usuário a ser exibido!');
             }
@@ -94,6 +94,19 @@ class ProfessorController{
 
         } catch (error) {
             console.log('Erro ao encontrar professores', error.message);
+        }
+    }
+
+    static async listarPorTurma(cod_turma){
+        try {
+            const professores = await ProfessorModel.listarPorTurma(cod_turma);
+            if(professores.length === 0){
+                return console.error('Nenhum professor encontrado!');
+            }
+            console.log('Professores: ');
+            return professores;
+        } catch (error) {
+            console.log('Erro ao listar professores', error.message);
         }
     }
 }

@@ -38,10 +38,6 @@ class TurmaView{
         console.table(turma)
     }
 
-    static async totalTurmas(){
-        const total = await TurmaController.totalTurmas();
-        console.table(total);
-    }
 }
 
 export default TurmaView;

@@ -4,7 +4,7 @@ class ProfessorModel{
     static async criar(nome, matricula, cod_turma) {
         const dados = [nome, matricula, cod_turma]
         const consulta = `insert into professor(nome, matricula, cod_turma)
- values($1, $2, $3) returning *;`
+         values($1, $2, $3) returning *;`
     const resultado = await client.query(consulta, dados)
     return resultado.rows 
     }

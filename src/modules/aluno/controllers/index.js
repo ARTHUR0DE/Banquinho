@@ -89,7 +89,7 @@ class AlunoController {
         }
     }
      
-            
+    static async totalPorCurso        
         
 }
 

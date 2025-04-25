@@ -1,50 +1,73 @@
 import client from '../../../config/database.js'
 
-class CursoModel{
+class TurmaModel{
     static async criar(nome, cod_turma) {
         const dados = [nome, cod_turma]
-        const consulta = `insert into curso(nome, cod_turma)
+        const consulta = `insert into turma(nome, cod_turma)
  values($1, $2,) returning *;`
     const resultado = await client.query(consulta, dados)
     return resultado.rows 
 }
 
     static async listarTodos() {
-        const consulta = `select * from curso`
+        const consulta = `select * from turma`
         const resultado = await client.query(consulta)
         return resultado.rows
     }
 
     static async listarPorCod(cod_turma) {
         const dados = [cod_turma]
-        const consulta = `select * from aluno where email = $1`
+        const consulta = `select * from aluno where cod_turma = $1`
         const resultado = await client.query(consulta, dados)
         return resultado.rows
     }
 
-    static async atualizarCurso(nome, cod_turma) {
+    static async atualizarTurma(nome, cod_turma) {
         const dados = [nome, cod_turma]
         const consulta = `update professor set nome = $1 where cod_turma = $2 returning *;`
         const resultado = await client.query(consulta,dados)
         return resultado.rows
     } 
 
-    static async deletarCurso(cod_turma) {
+    static async deletarTurma(cod_turma) {
         const dados = [cod_turma]
-        const consulta = `delete from curso where cod_turma = $1`
+        const consulta = `delete from turma where cod_turma = $1`
         await client.query(consulta, dados)
     }
 
     static async deletarTodos() {
-        const consulta = `delete from curso`
+        const consulta = `delete from turma`
         await client.query(consulta)
     }
 
-    static async totalCurso() {
-        const consulta = `select count(cod_turma) as total from curso `
-        const resultado = await client.query(consulta)
+    static async totalAlunosPorTurma(cod_turma) {
+        const dados = [cod_turma]
+        const consulta = `select count(aluno.cod_turma) as total_aluno_turma from turma
+            join aluno on turma.cod_turma = aluno.cod_turma
+            where aluno.cod_turma = $1`
+        const total_aluno_turma = await client.query(consulta, dados)
+        return total_aluno_turma
+    }
+
+    static async listarAlunosPorTurma(cod_turma) {
+        const dados = [cod_turma]
+        const consulta = `select aluno.nome, turma.nome from turma
+            join aluno on turma.cod_turma = aluno.cod_turma 
+            where aluno.cod_turma = $1`
+        const resultado = await client.query(dados,consulta)
         return resultado.rows
     }
+
+    static async listarProfessoresPorTurma(cod_turma) {
+        const dados = [cod_turma]
+        const consulta = `select professor.nome, turma.nome_turma from curso 
+            join professor on turma.cod_turma = professor.cod_curso
+            where professor.cod_turma = $1`
+        const resultado = await client.query(dados,consulta)
+        return resultado.rows
+    }
+
+    static async
 }
 
-export default CursoModel
+export default TurmaModel
