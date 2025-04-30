@@ -1,10 +1,10 @@
 import client from '../../../config/database.js'
 
 class TurmaModel{
-    static async criar(nome, cod_turma) {
-        const dados = [nome, cod_turma]
-        const consulta = `insert into turma(nome, cod_turma)
- values($1, $2,) returning *;`
+    static async criar(nome_turma, cod_turma) {
+        const dados = [nome_turma, cod_turma]
+        const consulta = `insert into turma(nome_turma, cod_turma)
+ values($1, $2) returning *;`
     const resultado = await client.query(consulta, dados)
     return resultado.rows 
 }
@@ -22,9 +22,9 @@ class TurmaModel{
         return resultado.rows
     }
 
-    static async atualizarTurma(nome, cod_turma) {
-        const dados = [nome, cod_turma]
-        const consulta = `update professor set nome = $1 where cod_turma = $2 returning *;`
+    static async atualizarTurma(nome_turma, cod_turma) {
+        const dados = [nome_turma, cod_turma]
+        const consulta = `update turma set nome_turma = $1 where cod_turma = $2 returning *;`
         const resultado = await client.query(consulta,dados)
         return resultado.rows
     } 
@@ -51,7 +51,7 @@ class TurmaModel{
 
     static async listarAlunosPorTurma(cod_turma) {
         const dados = [cod_turma]
-        const consulta = `select aluno.nome, turma.nome from turma
+        const consulta = `select aluno.nome, turma.nome_turma from turma
             join aluno on turma.cod_turma = aluno.cod_turma 
             where aluno.cod_turma = $1`
         const resultado = await client.query(dados,consulta)

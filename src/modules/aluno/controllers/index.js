@@ -87,9 +87,7 @@ class AlunoController {
         } catch (error) {
             console.log("Erro ao contar todos os alunos", error.message)
         }
-    }
-     
-    static async totalPorCurso        
+    }     
         
 }
 
